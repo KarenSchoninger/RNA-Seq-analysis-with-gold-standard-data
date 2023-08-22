@@ -7,3 +7,5 @@ pkgs = c("DESeq2", "edgeR", "gplots", "tximport", "biomaRt")
 # Install the packages
 BiocManager::install(pkgs)
 
+
+
