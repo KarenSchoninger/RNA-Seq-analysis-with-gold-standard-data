@@ -1,0 +1,9 @@
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# Target packages
+pkgs = c("DESeq2", "edgeR", "gplots", "tximport", "biomaRt")
+
+# Install the packages
+BiocManager::install(pkgs)
+
