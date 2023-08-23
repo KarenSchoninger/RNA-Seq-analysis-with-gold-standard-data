@@ -66,7 +66,7 @@ cat reads/ids.txt | parallel -j 4 "salmon quant -i ${IDX} -l A --validateMapping
 Rscript code/combine_transcripts.r                        #the script combine_transcripts.r is available in this repository.
 
 # Differential analysis with DESeq2:
-RScript code/deseq2.R                                     #the script combine_transcripts.r is available in this repository.
+RScript code/deseq2.r                                     #the script deseq2.R is available in this repository.
 
 
 
