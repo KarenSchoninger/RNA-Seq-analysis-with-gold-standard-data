@@ -34,6 +34,50 @@ featureCounts -p -a refs/features.gff -o counts.txt \
     reads/BORED_1.bam reads/BORED_2.bam reads/BORED_3.bam \
     reads/EXCITED_1.bam reads/EXCITED_2.bam reads/EXCITED_3.bam
 
+# Classification based RNA-Seq with kallisto and salmon
+
+#Create and activate a new environment:
+mamba create -y -n salmon
+conda activate salmon
+# Install the software:
+mamba install salmon parallel
+
+#Prepare the transcriptome for classification:
+
+REF=refs/transcripts.fa
+
+# The  salmon index:
+IDX=idx/salmon.idx
+
+# Build the index with salmon.
+salmon index -t ${REF} -i ${IDX}
+
+#Running the classification:
+mkdir -p salmon
+
+# Run a salmon quantification.
+salmon quant -i ${IDX} -l A --validateMappings -1 reads/BORED_1_R1.fq -2 reads/BORED_1_R2.fq  -o salmon/BORED_1
+cat salmon/BORED_1/quant.sf | head  | column -t
+
+# automate the process:
+cat reads/ids.txt | parallel -j 4 "salmon quant -i ${IDX} -l A --validateMappings -1 reads/{}_R1.fq -2 reads/{}_R2.fq  -o salmon/{}"
+
+#combine de counts:
+Rscript code/combine_transcripts.r                        #the script combine_transcripts.r is available in this repository.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
