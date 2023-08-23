@@ -23,6 +23,19 @@ hisat2 -x refs/genome.fa -1 reads/EXCITED_3_R1.fq -2 reads/EXCITED_3_R2.fq | sam
 cat reads/ids.txt | parallel "bedtools genomecov -ibam bam/{}.bam -split -bg  > bam/{}.bg"
 cat reads/ids.txt | parallel "bedGraphToBigWig bam/{}.bg  ${IDX}.fai bam/{}.bw"
 
+# Count features: 
+featureCounts -p -a refs/features.gff -o counts.txt bam/BORED_1.bam
+
+# Show the first five lines of the counts.txt file:
+cat counts.txt | head -5
+
+# Standardizing the count matrix:
+featureCounts -p -a refs/features.gff -o counts.txt \
+    reads/BORED_1.bam reads/BORED_2.bam reads/BORED_3.bam \
+    reads/EXCITED_1.bam reads/EXCITED_2.bam reads/EXCITED_3.bam
+
+
+
 
 
 
